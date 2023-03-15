@@ -5,7 +5,6 @@ class Centroid:
     y = 0
     z = 0
 
-
     def set(self, w,x,y,z):
         self.w = w
         self.x = x
@@ -42,7 +41,6 @@ class Centroid:
             self.set(w,x,y,z)
             moved = True
 
-        self.points = []
         return moved
 
 
@@ -52,3 +50,11 @@ class Centroid:
 
     def get_points_len(self):
         return len(self.points)
+
+
+    def get_points(self):
+        return self.points
+
+
+    def wipe_points(self):
+        self.points = []

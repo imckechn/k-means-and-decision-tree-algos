@@ -25,7 +25,7 @@ def parse_irises(fileLoc):
 def create_centroids():
     while True:
         #count = input("How many centroids would you like to create? ")
-        count = 3
+        count = "3"
 
         if count.isdigit():
             break
@@ -76,6 +76,10 @@ def get_max_values(irises):
 def kMeans(irises, centroids):
     print("Loops")
 
+    # remove the points from each centroid
+    for centroid in centroids:
+        centroid.wipe_points()
+
     #For each centroid
     for iris in irises:
         closestCentroid = None
@@ -87,12 +91,6 @@ def kMeans(irises, centroids):
                 closestCentroid = centroid
 
         closestCentroid.append_iris(iris)
-
-    print("lengths")
-    for cent in centroid:
-        print(cent.get_points_len())
-
-    return centroids
 
     #Update the centroids positiosn
     moved = False
@@ -122,17 +120,14 @@ for centroid in centroids:
 
     centroid.set(w, x, y, z)
 
-
-print("Centroid centers before clustering:")
-for centroid in centroids:
-    print("Centroid: ", centroid.get_center())
-    print("")
-
 centroids = kMeans(irises, centroids)
 
 print("Centroid centers after clustering:")
 for centroid in centroids:
     print("Centroid: ", centroid.get_center())
-    print("")
 
+    points = centroid.get_points()
+    for point in points:
+        print(point.get_type())
+    print("")
 
