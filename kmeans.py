@@ -79,7 +79,6 @@ def kMeans(irises, centroids):
     return centroids
 
 
-
 # MAIN PROGRAM
 print("Starting k-means clustering algorithm...")
 allIrises = parse_irises("data/iris.data")

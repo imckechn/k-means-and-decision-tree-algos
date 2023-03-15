@@ -1,5 +1,5 @@
 import random
-from kMeans.iris import Iris
+from helper.iris import Iris
 
 # This imports all the irises into an array of iris objects
 def parse_irises(fileLoc):
