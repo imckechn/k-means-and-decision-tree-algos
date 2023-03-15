@@ -6,10 +6,10 @@ class Iris:
     name = ""
 
     def __init__(self, type, w, x, y, z):
-        self.w = w
-        self.x = x
-        self.y = y
-        self.z = z
+        self.w = float(w)
+        self.x = float(x)
+        self.y = float(y)
+        self.z = float(z)
         self.name = type
 
     def get_type(self):
