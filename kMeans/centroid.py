@@ -1,4 +1,4 @@
-class centroid:
+class Centroid:
     point = []
     w = 0
     x = 0
