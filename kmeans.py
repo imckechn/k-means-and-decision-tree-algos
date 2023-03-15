@@ -21,6 +21,16 @@ def parse_irises(fileLoc):
     return irises
 
 
+#Split the data set into a training set and a test set, test_size needs to be a float for the percentage
+def train_test_split(irises, test_size):
+    random.shuffle(irises)
+    train_size = int(len(irises) * (1 - test_size))
+    train = irises[:train_size]
+    test = irises[train_size:]
+
+    return train, test
+
+
 #This creates all the centroids and returns a list of centroid objects
 def create_centroids():
     while True:
@@ -50,6 +60,7 @@ def calculate_distance(iris, centroid):
     return math.sqrt(distance)
 
 
+# Get the highest w,x,y,z values of the iris group
 def get_max_values(irises):
     maxW = 0
     maxX = 0
@@ -73,12 +84,12 @@ def get_max_values(irises):
     return [maxW, maxX, maxY, maxZ]
 
 
+#Main kmeans algo
 def kMeans(irises, centroids):
-    print("Loops")
 
-    # remove the points from each centroid
+    # remove the closest irises from each centroid
     for centroid in centroids:
-        centroid.wipe_points()
+        centroid.wipe_irises()
 
     #For each centroid
     for iris in irises:
@@ -105,29 +116,65 @@ def kMeans(irises, centroids):
 
 
 
+# MAIN PROGRAM
 print("Starting k-means clustering algorithm...")
-irises = parse_irises("data/iris.data")
-centroids = create_centroids()
+allIrises = parse_irises("data/iris.data")
 
 
-# Get the max values of all the irises and put the centroids randomly in that 4D plane
-maxValues = get_max_values(irises)
-for centroid in centroids:
-    w = random.uniform(0, maxValues[0])
-    x = random.uniform(0, maxValues[1])
-    y = random.uniform(0, maxValues[2])
-    z = random.uniform(0, maxValues[3])
+highScore = 0
+score = 0
+epoch = 0
+bestCentroids = []
 
-    centroid.set(w, x, y, z)
+#This loops the algorithm over and over again
+while score < 1 and epoch < 100:
+    centroids = create_centroids()
+    irises, testIrises = train_test_split(allIrises, 0.2)
 
-centroids = kMeans(irises, centroids)
+    # Get the max values of all the irises and put the centroids randomly in that 4D plane
+    maxValues = get_max_values(irises)
+    for centroid in centroids:
+        w = random.uniform(0, maxValues[0])
+        x = random.uniform(0, maxValues[1])
+        y = random.uniform(0, maxValues[2])
+        z = random.uniform(0, maxValues[3])
 
-print("Centroid centers after clustering:")
-for centroid in centroids:
-    print("Centroid: ", centroid.get_center())
+        centroid.set(w, x, y, z)
 
-    points = centroid.get_points()
-    for point in points:
-        print(point.get_type())
-    print("")
+    #Finds the centroids using kmeans
+    centroids = kMeans(irises, centroids)
 
+    # Set the most common irises for each centroid (i.e. which iris came up the most in it's group)
+    for centroid in centroids:
+        centroid.set_most_common_iris()
+
+    # Now find the accuracy of the algorithm
+    correct = 0
+    for iris in testIrises:
+        closestCentroid = None
+        minDistanc = 100
+        for centroid in centroids:
+            distance = calculate_distance(iris, centroid)
+            if distance < minDistanc:
+                minDistanc = distance
+                closestCentroid = centroid
+
+        if closestCentroid.get_most_common_iris() == iris.get_type():
+            correct += 1
+
+    #Compute the score of these centroids
+    score = correct / len(testIrises)
+    if score > highScore:
+        highScore = score
+        bestCentroids = centroids
+    print("Epoch ", epoch,  " Accuracy: ", score * 100, "%")
+    epoch += 1
+
+
+#Final Printout
+print("\n\n-------------------------------------------------------------")
+print("After ", epoch, " epochs, the highest accuracy was: ", highScore * 100, "%")
+print("\nThe centroids were: ")
+for centroid in bestCentroids:
+    print(centroid.get_center())
+print("")

@@ -5,6 +5,7 @@ class Iris:
     z = 0
     name = ""
 
+    #Initializes the iris location and type
     def __init__(self, type, w, x, y, z):
         self.w = float(w)
         self.x = float(x)
@@ -12,6 +13,7 @@ class Iris:
         self.z = float(z)
         self.name = type
 
+    #Returns the type of the iris
     def get_type(self):
         return self.name
 
@@ -27,5 +29,6 @@ class Iris:
     def get_z(self):
         return self.z
 
+    #Gets the coordinates of the iris as an array
     def get_coordinates(self):
         return [self.w, self.x, self.y, self.z]
