@@ -12,18 +12,6 @@ def create_centroids():
     return centroids
 
 
-# Calculates the distance between a centroid and an iris. Returns the distance
-def calculate_distance(iris, centroid):
-    iris_coordinates = iris.get_coordinates()
-    centroid_coordinates = centroid.get_center()
-
-    distance = 0
-    for i in range(len(iris_coordinates)):
-        distance += math.pow(iris_coordinates[i] - centroid_coordinates[i], 2)
-
-    return math.sqrt(distance)
-
-
 # Get the highest w,x,y,z values of the iris group
 def get_max_values(irises):
     maxW = 0
@@ -130,14 +118,20 @@ while score < 1 and epoch < 100:
     if score > highScore:
         highScore = score
         bestCentroids = centroids
-    print("Epoch ", epoch,  " Accuracy: ", score * 100, "%")
+    print("Epoch ", epoch, " Accuracy: ", score * 100, "%")
+    for i in range(len(centroids)):
+        print("Controid", i, "distorition:", centroids[i].get_distortion())
     epoch += 1
 
 
 #Final Printout
 print("\n\n-------------------------------------------------------------")
 print("After ", epoch, " epochs, the highest accuracy was: ", highScore * 100, "%")
-print("\nThe centroids were: ")
+print("\nThe centroid positions are:")
 for centroid in bestCentroids:
     print(centroid.get_center())
 print("")
+
+print("Their distortions are:")
+for i in range(len(bestCentroids)):
+        print("Controid", i, "distorition:", bestCentroids[i].get_distortion())

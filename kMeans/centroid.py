@@ -1,3 +1,6 @@
+import helper.helperFunctions as helper
+import math
+
 class Centroid:
     closest_irises = []
     w = 0
@@ -88,3 +91,11 @@ class Centroid:
     # Returns the most common flower in the centroid
     def get_most_common_iris(self):
         return self.most_common_iris
+
+    # Returns the distortion of the centroid
+    def get_distortion(self):
+        distortion = 0
+        for iris in self.closest_irises:
+            distance = helper.calculate_distance(iris, self)
+            distortion += math.pow(distance, 2)
+        return distortion

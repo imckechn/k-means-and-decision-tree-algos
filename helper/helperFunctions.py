@@ -1,5 +1,6 @@
 import random
 from helper.iris import Iris
+import math
 
 # This imports all the irises into an array of iris objects
 def parse_irises(fileLoc):
@@ -27,3 +28,15 @@ def train_test_split(irises, test_size):
     test = irises[train_size:]
 
     return train, test
+
+
+# Calculates the distance between a centroid and an iris. Returns the distance
+def calculate_distance(iris, centroid):
+    iris_coordinates = iris.get_coordinates()
+    centroid_coordinates = centroid.get_center()
+
+    distance = 0
+    for i in range(len(iris_coordinates)):
+        distance += math.pow(iris_coordinates[i] - centroid_coordinates[i], 2)
+
+    return math.sqrt(distance)
