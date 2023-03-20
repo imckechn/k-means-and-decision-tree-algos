@@ -9,6 +9,16 @@ def entropy():
     entropy = -sum([p * math.log(p, 2) for p in [p, p, p]])
     return entropy
 
+def gini():
+    events = 3
+    p = 1/events # Equal chance a iris could be from all three groups
+
+    gini = sum([p * (1 - p) for p in [p, p, p]])
+    return gini
+
+def information_gain():
+    a = sum()
+
 
 
 
