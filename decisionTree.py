@@ -1,13 +1,4 @@
 from helper.helperFunctions import *
-from helper.helperFunctions import Iris
-import math
-
-def entropy():
-    events = 3
-    p = 1/events # Equal chance a iris could be from all three groups
-
-    entropy = -sum([p * math.log(p, 2) for p in [p, p, p]])
-    return entropy
 
 def gini(groups, classes):
     n_instances = float(sum([len(group) for group in groups]))
@@ -101,40 +92,37 @@ def print_tree(node, depth=0):
 
 # MAIN PROGRAM
 allIrises = parse_irises("data/iris.data")
-irises, testIrises = train_test_split(allIrises, 0.2)
-
 
 # Make a prediction with a decision tree
-def predict(node, iris):
-    if iris.get_coordinates()[node['index']] < node['value']:
-        if isinstance(node['left'], dict):
-            return predict(node['left'], iris)
-        else:
-            return node['left']
+def predict(tree, iris):
+    if type(tree) == str:
+        return tree
+
+    if iris.get_coordinates()[tree['index']] < tree['value']:
+        return predict(tree['left'], iris)
     else:
-        if isinstance(node['right'], dict):
-            return predict(node['right'], iris)
-        else:
-            return node['right']
+        return predict(tree['right'], iris)
 
 accuracy = 0
-while (accuracy < 75):
+epoch = 0
+while accuracy != 100:
+    irises, testIrises = train_test_split(allIrises, 0.2)
 
-    tree = build_tree(irises, 5, 1)
+    tree = build_tree(irises, 4, 1)
     class_values = list(set(iris.get_type() for iris in irises))
 
-    #  predict with a stump
-    stump = {'index': 0, 'right': 1, 'value': 6.642287351, 'left': 0}
-
-    correct = 0
     total = 0
-
+    correct = 0
     for iris in testIrises:
-        prediction = predict(stump, iris)
+        ans = predict(tree, iris)
 
-        if class_values[prediction] == iris.get_type():
+        if ans == iris.get_type():
             correct += 1
         total += 1
 
-    accuracy = correct/total * 100
-    print("Accuracy: ", correct/total * 100)
+    accuracy = correct/total*100
+    epoch += 1
+
+    print("Random iris collection #" + str(epoch) + " Accuracy = " + str(accuracy) + "%")
+
+print("Accuracy = " + str(correct/total*100) + "%")
