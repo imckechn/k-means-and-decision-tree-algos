@@ -1,35 +1,50 @@
 from helper.helperFunctions import *
 
-def gini(groups, classes):
+# This evaluates the split of the data set
+def gini(groups, labels):
     n_instances = float(sum([len(group) for group in groups]))
-    # sum weighted Gini index for each group
+
     giniVal = 0.0
+
+    #two groups, a left and right group
     for group in groups:
         size = float(len(group))
-        # avoid divide by zero
         if size == 0:
             continue
+
         score = 0.0
-        # score the group based on the score for each class
-        for class_val in classes:
-            p = [iris.get_type() for iris in group].count(class_val) / size
+        # Get all the labels in the group
+        types = []
+        for iris in group:
+            types.append(iris.get_type())
+
+        #Get the score for each label and add it to the gini value
+        for label in labels:
+            p = types.count(label) / size
             score += p * p
-            # weight the group score by its relative size
+
             giniVal += (1.0 - score) * (size / n_instances)
     return giniVal
 
 
+#This splits the irises on a value. If an iris value (the index = the iris attribute) is less than the value, it goes to the left group, otherwise it goes to the right group
 def split(index, value, irises):
     left, right = list(), list()
     for iris in irises:
+
         if iris.get_coordinates()[index] < value:
             left.append(iris)
         else:
             right.append(iris)
+
     return left, right
 
-def to_terminal(group):
-    outcomes = [iris.get_type() for iris in group]
+#
+def to_terminal(irisGroup):
+    outcomes = {}
+    for iris in irisGroup:
+        outcomes.append(iris.get_type())
+
     return max(set(outcomes), key=outcomes.count)
 
 
@@ -90,9 +105,6 @@ def print_tree(node, depth=0):
         print('%s[%s]' % ((depth*' ', node)))
 
 
-# MAIN PROGRAM
-allIrises = parse_irises("data/iris.data")
-
 # Make a prediction with a decision tree
 def predict(tree, iris):
     if type(tree) == str:
@@ -103,8 +115,14 @@ def predict(tree, iris):
     else:
         return predict(tree['right'], iris)
 
+
+# MAIN PROGRAM
+allIrises = parse_irises("data/iris.data")
+
 accuracy = 0
 epoch = 0
+
+#Loop until it's reached 100% accuracy
 while accuracy != 100:
     irises, testIrises = train_test_split(allIrises, 0.2)
 
