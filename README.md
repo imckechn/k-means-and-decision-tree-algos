@@ -21,60 +21,108 @@ The decion tree has a max depth of 4. It's specified in a variable called MAXDEP
 ### Kmeans
 ***Epoch = N***
 
-Epoch  0  Accuracy:  26.666666666666668 %
+Epoch  0  Accuracy:  66.66666666666666 %
 
 Controid 0 distorition: 0
 
-Controid 1 distorition: 545.0587499999998
+Controid 1 distorition: 20.871707317073163
+
+Controid 2 distorition: 103.56582278481012
+
+Epoch  1  Accuracy:  63.33333333333333 %
+
+Controid 0 distorition: 0
+
+Controid 1 distorition: 18.270256410256412
+
+Controid 2 distorition: 102.84395061728397
+
+Epoch  2  Accuracy:  70.0 %
+
+Controid 0 distorition: 21.175500000000007
+
+Controid 1 distorition: 0
+
+Controid 2 distorition: 96.18174999999998
+
+Epoch  3  Accuracy:  26.666666666666668 %
+
+Controid 0 distorition: 0
+
+Controid 1 distorition: 0
+
+Controid 2 distorition: 551.817916666667
+
+Epoch  4  Accuracy:  23.333333333333332 %
+
+Controid 0 distorition: 541.7202500000002
+
+Controid 1 distorition: 0
 
 Controid 2 distorition: 0
 
-Epoch  1  Accuracy:  53.333333333333336 %
+Epoch  5  Accuracy:  66.66666666666666 %
 
-Controid 0 distorition: 92.6101388888889
+Controid 0 distorition: 11.5344
 
-Controid 1 distorition: 0
+Controid 1 distorition: 93.22831168831168
 
-Controid 2 distorition: 27.640208333333344
+Controid 2 distorition: 2.877777777777778
 
-Epoch  2  Accuracy:  53.333333333333336 %
+Epoch  6  Accuracy:  30.0 %
 
-Controid 0 distorition: 21.601860465116278
+Controid 0 distorition: 0
 
-Controid 1 distorition: 0
+Controid 1 distorition: 541.2670000000002
 
-Controid 2 distorition: 90.95714285714287
+Controid 2 distorition: 0
 
-Epoch  3  Accuracy:  100.0 %
+Epoch  7  Accuracy:  60.0 %
 
-Controid 0 distorition: 45.04226415094341
+Controid 0 distorition: 0
 
-Controid 1 distorition: 9.857857142857144
+Controid 1 distorition: 95.7167088607595
 
-Controid 2 distorition: 11.09794871794872
+Controid 2 distorition: 24.097073170731704
 
+Epoch  8  Accuracy:  100.0 %
 
+Controid 0 distorition: 11.785
+
+Controid 1 distorition: 44.84490566037736
+
+Controid 2 distorition: 10.913513513513513
 
 -------------------------------------------------------------
 
-After  4  epochs, the highest accuracy was:  100.0 %
+After  9  epochs, the individual Irises accuracies are as follows
+
+Epoch #10
+
+For  13  Iris-setosa in the training set, Accuracy = 100.0%
+
+For  10  Iris-versicolor in the training set, Accuracy = 100.0%
+
+For  7  Iris-virginica in the training set, Accuracy = 100.0%
+
 
 The centroid positions are:
 
-[6.633962264150941, 2.984905660377359, 5.3830188679245285, 1.913207547169811]
+[5.729999999999999, 2.736666666666667, 4.1066666666666665, 1.2766666666666668]
 
-[5.749999999999999, 2.7571428571428567, 4.196428571428572, 1.3035714285714284]
+[6.579245283018868, 2.9811320754716975, 5.401886792452831, 1.9396226415094335]
 
-[5.005128205128206, 3.3923076923076927, 1.458974358974359, 0.25384615384615383]
+[5.013513513513512, 3.408108108108108, 1.4837837837837835, 0.2513513513513514]
 
 
 Their distortions are:
 
-Controid 0 distorition: 45.04226415094341
+Controid 0 distorition: 11.785
 
-Controid 1 distorition: 9.857857142857144
+Controid 1 distorition: 44.84490566037736
 
-Controid 2 distorition: 11.09794871794872
+Controid 2 distorition: 10.913513513513513
+
 
 
 *** Note this a good randomplacement of the centoids. It's possible to get a worse placement and have a lower accuracy. ***

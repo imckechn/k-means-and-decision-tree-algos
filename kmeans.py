@@ -126,7 +126,77 @@ while score < 1 and epoch < 100:
 
 #Final Printout
 print("\n\n-------------------------------------------------------------")
-print("After ", epoch, " epochs, the highest accuracy was: ", highScore * 100, "%")
+print("After ", epoch, " epochs, the individual Irises accuracies are as follows")
+
+iris_setosa = []
+iris_versicolor = []
+iris_virginica = []
+for iris in testIrises:
+    if iris.get_type() == "Iris-setosa":
+        iris_setosa.append(iris)
+    elif iris.get_type() == "Iris-versicolor":
+        iris_versicolor.append(iris)
+    else:
+        iris_virginica.append(iris)
+
+#Find the accuracy of the tree for each iris
+total = 0
+correct = 0
+for iris in iris_setosa:
+    closestCentroid = None
+    minDistanc = 100
+    total += 1
+    for centroid in centroids:
+        distance = calculate_distance(iris, centroid)
+        if distance < minDistanc:
+            minDistanc = distance
+            closestCentroid = centroid
+
+    if closestCentroid.get_most_common_iris() == iris.get_type():
+        correct += 1
+
+setosa_accuracy = correct/total*100
+epoch += 1
+print("Epoch #" + str(epoch))
+print("For ", len(iris_setosa), " Iris-setosa in the training set, Accuracy = " + str(setosa_accuracy) + "%")
+
+
+total = 0
+correct = 0
+for iris in iris_versicolor:
+    closestCentroid = None
+    minDistanc = 100
+    total += 1
+    for centroid in centroids:
+        distance = calculate_distance(iris, centroid)
+        if distance < minDistanc:
+            minDistanc = distance
+            closestCentroid = centroid
+
+    if closestCentroid.get_most_common_iris() == iris.get_type():
+        correct += 1
+
+versicolor_accuracy = correct/total*100
+print("For ", len(iris_versicolor), " Iris-versicolor in the training set, Accuracy = " + str(versicolor_accuracy) + "%")
+
+total = 0
+correct = 0
+for iris in iris_virginica:
+    closestCentroid = None
+    minDistanc = 100
+    total += 1
+    for centroid in centroids:
+        distance = calculate_distance(iris, centroid)
+        if distance < minDistanc:
+            minDistanc = distance
+            closestCentroid = centroid
+
+    if closestCentroid.get_most_common_iris() == iris.get_type():
+        correct += 1
+
+virginica_accuracy = correct/total*100
+print("For ", len(iris_virginica), " Iris-virginica in the training set, Accuracy = " + str(virginica_accuracy) + "%")
+
 print("\nThe centroid positions are:")
 for centroid in bestCentroids:
     print(centroid.get_center())
